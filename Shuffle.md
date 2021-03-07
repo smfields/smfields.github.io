@@ -4,6 +4,8 @@ Shuffle is a web-based music party game where players can either compete or work
 *Source code available upon request*
 
 ### Architecture
+In this section I outline the architecture for the web application. Click on a section to read more.
+
 <details>
 <summary>Client</summary>
 
@@ -36,13 +38,10 @@ Shuffle is a web-based music party game where players can either compete or work
 
 
 ### Challenges
-In this section I explore some of the aspects of designing the game that I found challenging or particularly interesting. 
-
-*Click on a challenge to read more about it.*
+In this section I explore some of the aspects of designing the game that I found challenging or particularly interesting. Click on a challenge to read more.
 
 <details>
 <summary>Fetching random songs from a playlist</summary>
-<p>
 
 #### Problem
 The whole game relies on being able to choose some random songs off of whatever playlist the user selects, and using those songs to play the game. The challenging part is that the songs are returned from the music platform APIs in pages.
@@ -280,7 +279,12 @@ Below is an outline of the algorithm I designed to meet the above requirements, 
 
     </details>
 
-</p>
 </details>
+
+<details>
+<summary>Checking the player's guesses</summary>
+
+</details>
+
 
 [Back](README.md)
