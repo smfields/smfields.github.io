@@ -10,7 +10,6 @@ In this section I explore some of the aspects of designing the game that I found
 
 <details>
 <summary>Fetching random songs from a playlist</summary>
-<p>
 
 #### Problem
 The whole game relies on being able to select some random songs off of whatever playlist the user selects, and using those songs to play the game. The challenging part is that the songs on the playlist are paged, and so at no point do we ever have all of the songs in memory.
@@ -25,7 +24,6 @@ When designing the selection algorithm we have a few requirements:
     Math.random();
 ```
 
-</p>
 </details>
 
 \
