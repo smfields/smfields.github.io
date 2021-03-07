@@ -26,7 +26,7 @@ Below are the steps of the algorithm that I designed to meet the above requireme
 2. From the playlist provided by the caller we already have some basic information, such as the total number of songs on the playlist.
 3. Lets generate some random numbers to represent the indices of the songs we will eventually fetch. These random numbers must be unique, and they must be within the range of possible song indices for the playlist. One thing you may notice from the code sample is that if the user requests more than half of the total number of songs on the playlist as random songs, then we can just generate random indices to represent the songs that should be excluded rather than included.
    <details>
-   <summary>Code Sample:</summary>
+   <summary>Code Sample</summary>
 
     ```csharp
     /// <summary>
@@ -91,6 +91,8 @@ Below are the steps of the algorithm that I designed to meet the above requireme
     ```
 
    </details>
+
+\
 4. Next step
 
 </p>
