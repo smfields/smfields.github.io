@@ -91,9 +91,7 @@ Below are the steps of the algorithm that I designed to meet the above requireme
     ```
 
    </details>
-
-\
-4. Next step
+4. Next Step
 
 </p>
 </details>
