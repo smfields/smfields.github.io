@@ -3,14 +3,18 @@
 
 @import "{{ site.theme }}";
 
+.title {
+    margin: 20px 0;
+}
+
+.subtitle {
+    margin: 0;
+}
+
 .project-description {
     margin: 20px 0;
 }
 
 .contact-info {
-    margin-bottom: 5px;
-
-    .contact-method {
-        margin: 0;
-    }
+    margin-bottom: 20px;
 }
