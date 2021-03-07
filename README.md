@@ -17,7 +17,6 @@ Shuffle is a web-based music party game where players can either compete or work
 ### Resume
 <canvas 
     id="resume-canvas"
-    width="100%"
 ></canvas>
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 <script>
