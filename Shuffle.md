@@ -8,16 +8,14 @@ Shuffle is a web-based music party game where players can either compete or work
 ### Challenges
 In this section I explore some of the aspects of designing the game that I found challenging or particularly interesting.
 
-<div class="indent-1">
-    <details class="collapsible">
-        <summary>
-            Fetching random songs from a playlist
-        </summary>
-        <p class="details indent-2">
-            Details
-        </p>
-    </details>
-</div>
+<details>
+<summary>Fetching random songs from a playlist</summary>
+<p>
 
-\
+Details
+
+</p>
+</details>
+
+
 [Back](README.md)
