@@ -9,30 +9,49 @@ In this section I outline the architecture for the web application. Click on a s
 <details>
 <summary>Client</summary>
 
+The client-side portion of Shuffle is a single-page application written in Typescript and using React. I use SASS modules for styling, and the components I use are a mixture of react-bootstrap components and my own custom components.
 
 </details>
+
 
 <details>
 <summary>Web Server</summary>
 
+The web server is an ASP.NET Core web application written in C#. It's primary purpose is to facilitate the creation of a new game, and then it hands off to the game server to handle the persistent game actions.
+
+The web server utilizes the custom music platform library for any and all interactions with the music platforms.
 
 </details>
+
 
 <details>
 <summary>Game Server</summary>
 
+The game server is an ASP.NET Core web application much like the web server, but its primary purpose is to control the state of active games. Unlike the web sever, the game server has only a single API endpoint which is used to create a new game. The rest of the communication with the game server is done over a SignalR connection directly to the client.
+
+The game server controls the state of the game using timers, and will notify the client via the SignalR connection of any updates to the game state. This architecture prevents the user from being able to interfere with the state of the game like they would be able to if it was being run client-side.
+
+The game server utilizes the custom music platform library for any and all interactions with the music platforms.
 
 </details>
 
 <details>
-<summary>Database</summary>
+<summary>Music Platform Library</summary>
 
+The music platform library is a custom C# library I wrote that acts as a level of abstraction on top of the various music platform APIs that exist. It presents a single unified interface that can be used to perform actions such as retrieving playlists and songs or controlling music playback.
+
+By using the music platform library both the game server and web server are able to interact with the music platform selected by the user without ever needing to worry about which platform they are talking to.
 
 </details>
 
 <details>
 <summary>Deployment</summary>
 
+The entire application is hosted off-site through Amazon Web Services. I'm using AWS Elastic Beanstalk for the web application deployment, AWS RDS to host a MySQL database, and AWS CodePipeline for continuous deployment. 
+
+The AWS CodePipeline is connected to my GitHub repository and automatically deploys to my production version on merges to the main branch, or my to development version on merges to the dev branch.
+
+The connection to the load balancer is secured using TLS, however the backend connections between the load balancer and the EC2 instances are not.
 
 </details>
 
