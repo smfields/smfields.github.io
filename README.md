@@ -15,9 +15,52 @@ Play here: [https://shuffle.smfields.net](https://shuffle.smfields.net)
 Shuffle is a web-based music party game where players can either compete or work together to try and identify a song that is playing. Players are on the clock, and must try to name the song and the artist as quickly as possible. Shuffle integrates with popular music streaming platforms, such as Spotify, to allow users to play with their own playlists, or they can use one of the pre-built genre playlists.
 
 ### Resume
-<embed 
+<canvas id="resume-canvas"></canvas>
+<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script>
+    // PDF Loading Script - https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples
+    var url = '/assets/img/2020Resume.pdf';
+
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+    var loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then(function(pdf) {
+        console.log('PDF Loaded');
+
+        // Fetch the first page
+        var pageNumber = 1;
+        pdf.getPage(pageNumber).then(function(page) {
+            console.log('Page loaded');
+
+            var scale = 1.5;
+            var viewport = page.getViewport({scale: scale});
+
+            // Prepare canvas using PDF page dimensions
+            var canvas = document.getElementById('resume-canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+
+            var renderTask = page.render(renderContext);
+            renderTask.promise.then(function () {
+                console.log('Page rendered');
+            });
+        });
+    }, function(error) {
+        console.error(error);
+    });  
+</script>
+<!-- <embed 
     src="/assets/img/2020Resume.pdf#toolbar=0&view=FitH" 
     type="application/pdf" 
     width="100%" 
     height="645px"
->
+> -->
