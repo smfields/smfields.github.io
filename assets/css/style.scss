@@ -3,12 +3,17 @@
 
 @import "{{ site.theme }}";
 
+h4 {
+    margin-bottom: 0;
+}
+
 .head-shot {
-    max-width: min(10vw, 270px);
+    max-width: 270px;
 }
 
 .title {
     margin-top: 20px;
+    margin-bottom: 0px;
 }
 
 .subtitle {
