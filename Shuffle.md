@@ -284,6 +284,24 @@ Below is an outline of the algorithm I designed to meet the above requirements, 
 <details>
 <summary>Checking the player's guesses</summary>
 
+#### Problem
+When player's submit their guesses for the name of the song or the name of the artist, they are doing so using a text entry field. When I want to check if the guess they provided matches the correct answer, I can't simply compare the two strings for equality. Players have a concept of being *close enough* to the right answer, wherein they would expect to be given credit for their guess even if it doesn't perfectly match the correct answer.
+
+A great example would be if a player guesses "Stairway to Heaven" as the name of the song, but the actual title according to the music platform is "Stairway to Heaven - 1990 Remaster". You and I might both understand that to be close enough, but it's difficult to craft an algorithm that agrees. 
+
+#### Solution
+My solution to this problem comes in two phases.
+
+**Phase 1:**
+In phase 1 I'll be using a hand crafted algorithm that attempts to address some of the most common errors people make when entering song or artist names. This includes handling things like simple misspellings, but it also includes stripping out unnecessary information such as the "- 1990 Remaster" from the above example.
+
+This is done using a text cleaning function to remove the unnecessary information from the correct string, then using a string similarity function to calculate the similarity between the guess and the now cleaned correct string.
+
+**Phase 2:**
+Phase 2 is something I have planned for the future, and it will hopefully be able to better address this issue in the long term. The idea is to train a machine learning algorithm using the actual data collected from people playing the game. I will store peoples guesses as they play, then at a later time I will ask volunteers to help categorize guesses as being close enough or not close enough.
+
+Hopefully with enough data I can train the algorithm to understand which pieces of the string are important, and which are mostly ignored when determining correctness.
+
 </details>
 
 
