@@ -21,10 +21,10 @@ When designing the selection algorithm we have a few requirements:
 - We can't assume that all the songs on the playlist will fit in memory at the same time. Therefore we need to keep the songs in pages, and only store the pages we need.
 
 #### Solution
-Below are the steps of the algorithm that I designed to meet the above requirements, along with some code samples:
-1. To start off, we allow the caller to specify the playlist off of which they want to select the songs, and the number of songs they want to retrieve.
+Below is an outline of the algorithm I designed to meet the above requirements, along with some code samples:
+1. To start off, we allow the caller to specify the playlist from which they want to select the songs, and the number of songs they want to retrieve.
 2. From the playlist provided by the caller we already have some basic information, such as the total number of songs on the playlist.
-3. Lets generate some random numbers to represent the indices of the songs we will eventually fetch. These random numbers must be unique, and they must be within the range of possible song indices for the playlist. One thing you may notice from the code sample is that if the user requests more than half of the total number of songs on the playlist as random songs, then we can just generate random indices to represent the songs that should be excluded rather than included.
+3. Lets generate some random numbers to represent the indices of the songs we will eventually fetch. These random numbers must be unique, and they must be within the range of possible song indices for the playlist.
    <details>
    <summary>Code Sample</summary>
 
@@ -91,7 +91,162 @@ Below are the steps of the algorithm that I designed to meet the above requireme
     ```
 
    </details>
-4. Next Step
+4. Now that we know which indices we're going to want to fetch, we can group them together to form the actual page requests. The purpose of the grouping is to minimize the number of page requests needed to fetch every index.
+    <details>
+    <summary>Code Sample</summary>
+
+    ```csharp
+    /// <summary>
+    /// Organizes a list of indices into the smallest number of groups possible while ensuring that the maximum
+    /// range of each group does not exceed <paramref name="maxGroupRange"/>. The total number of groups created
+    /// can span from 1 all the way up to the count of indices provided.
+    /// </summary>
+    /// <param name="indices">The list of indices to group.</param>
+    /// <param name="maxGroupRange">
+    /// The maximum range that the indices of any group may span. 
+    /// The range of a group is the value of the highest index minus the value of the smallest index.
+    /// </param>
+    /// <returns>A list of index groupings</returns>
+    private List<List<int>> groupIndices(List<int> indices, int maxGroupRange = 100)
+    {
+        #region Parameter Validation
+        Require.CollectionNotEmpty(indices);
+        #endregion
+
+        // Stores the groups of indices
+        List<List<int>> groups = new List<List<int>>();
+
+        if (indices.Count == 1)
+        {
+            // By default a single element is already grouped
+            groups.Add(indices);
+            return groups;
+        }
+
+        // Put the indices in sorted order before grouping
+        indices.Sort();
+
+        // Create the first group and place the first index element into that group
+        List<int> currentGroup = new List<int>()
+        {
+            indices[0]
+        };
+        groups.Add(currentGroup);
+
+        // Iterate through the remaining indices, grouping them into groups where the range of the indices
+        // does not exceed maxGroupRange.
+        for (int i = 1; i < indices.Count; i++)
+        {
+            int currentIndex = indices[i];
+            int currentGroupMinValue = currentGroup[0];
+            if (currentIndex - currentGroupMinValue < maxGroupRange)
+            {
+                // Element can fit in the current group
+                currentGroup.Add(currentIndex);
+            }
+            else
+            {
+                // Element can't fit in the current group. We need to start a new group.
+                currentGroup = new List<int>()
+                {
+                    currentIndex
+                };
+                groups.Add(currentGroup);
+            }
+        }
+
+        // Return all the index groupings
+        return groups;
+    }
+    ```
+
+    </details>
+5. From there we can make the page requests. We request each page, and then we pick out the correct songs from the pages that are returned. 
+    <details>
+    <summary>Code Sample</summary>
+
+    ```csharp
+    /// <summary>
+    /// Fetches songs from the playlist based on their indices. It is assumed
+    /// that the group contains songs that can all be accessed in a single request.
+    /// </summary>
+    /// <param name="group">Indices representing the songs to fetch.</param>
+    /// <returns>A List of <see cref="SpotifySong"/>s based on the indices in the group.</returns>
+    private async Task<List<SpotifySong>> fetchSongGroup(List<int> group)
+    {
+        // We need the first page of songs to be able to request additional pages
+        var firstSongPage = await GetSongs();
+
+        // Calculate the correct offset and limit to use for this group
+        int offset = calculateIndexGroupOffset(group);
+        int limit = calculateIndexGroupLimit(group);
+
+        // Create the request for a page containing all the songs in the group
+        var groupSongPage = await firstSongPage.GetPage(offset, limit);
+
+        // Pull the correct songs out of the page
+        List<SpotifySong> groupSongs = new List<SpotifySong>(group.Count);
+        foreach (int index in group)
+        {
+            var song = groupSongPage.Items[index - offset];
+            groupSongs.Add(song);
+        }
+
+        // Return all the songs from the group
+        return groupSongs;
+    }
+    ```
+
+    </details>
+6. Finally we randomize the order of the songs in our list since we previously sorted them all when we were grouping. The overall random song generation function is below:
+    <details>
+    <summary>Code Sample</summary>
+
+    ```csharp
+    /// <summary>
+    /// Retrieves a number of random songs from the playlist. Note, it is assumed
+    /// that the number of songs requested can be stored in memory rather than
+    /// being returned as a paging object.
+    /// </summary>
+    /// <param name="count">The number of random songs to retrieve</param>
+    /// <returns>A collection of random songs off the playlist</returns>
+    public async ITask<IReadOnlyCollection<SpotifySong>> GetRandomSongs(int count)
+    {
+        #region Parameter Validation
+        Require.True(count > 0, "Must request at least one random song.");
+        #endregion
+
+        // Retrieve the songs off the playlist
+        var playlistSongs = await GetSongs();
+
+        #region Playlist Songs Validation
+        Require.True(playlistSongs.Total.HasValue, "Number of the songs in the playlist is unknown."); // Can't fetch random songs if we don't know how many songs the playlist has
+        Require.True(count <= playlistSongs.Total.Value, "Number of random songs requested exceeds the number of songs on the playlist."); // Can't request more songs than there are on the playlist
+        #endregion
+
+        int numSongs = playlistSongs.Total.Value;
+
+        // Pick some random songs based off random indices into the playlist
+        List<int> randomSongIndices = generateUniqueRandomIntegers(0, numSongs, count);
+
+        // Group the indices together to minimize the number of requests needed
+        List<List<int>> indexGroups = groupIndices(randomSongIndices);
+
+        // Fetch all the songs from each group
+        List<SpotifySong> songs = new List<SpotifySong>();
+        foreach (List<int> group in indexGroups)
+        {
+            var groupSongs = await fetchSongGroup(group);
+            songs.AddRange(groupSongs);
+        }
+
+        // Return all the random songs requested in a random order
+        Random r = new Random();
+        return songs.OrderBy(song => r.Next()).ToList();
+    }
+    ```
+
+    </details>
 
 </p>
 </details>

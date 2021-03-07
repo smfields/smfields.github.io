@@ -47,7 +47,8 @@ h4 {
 details {
     margin-bottom: 20px;
 
-    &[open] > summary {
+    summary {
+        cursor: pointer;
         font-weight: 600;
     }
 }
