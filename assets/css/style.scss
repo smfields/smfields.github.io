@@ -3,6 +3,10 @@
 
 @import "{{ site.theme }}";
 
+.head-shot {
+    max-width: min(10vw, 270px);
+}
+
 .title {
     margin-top: 20px;
 }
