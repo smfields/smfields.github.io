@@ -15,4 +15,10 @@ Play here: [https://shuffle.smfields.net](https://shuffle.smfields.net)
 Shuffle is a game where players can compete against one another, or collaborate with one another, to try and identify a song that is playing. Players are on the clock, and must try to name the song and the artist as quickly as possible. Shuffle integrates with popular music streaming platforms, such as Spotify, to allow users to play with their own playlists, or they can use one of the pre-built genre playlists.
 
 ### Resume
-<embed src="/assets/img/2020Resume.pdf#toolbar=0&view=FitH" type="application/pdf" width="100%" height="645px">
+<embed 
+    src="/assets/img/2020Resume.pdf#toolbar=0&view=FitH" 
+    type="application/pdf" 
+    width="100%" 
+    height="645px"
+    onLoad="console.log('Test')"
+>
