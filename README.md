@@ -15,7 +15,10 @@ Play here: [https://shuffle.smfields.net](https://shuffle.smfields.net)
 Shuffle is a web-based music party game where players can either compete or work together to try and identify a song that is playing. Players are on the clock, and must try to name the song and the artist as quickly as possible. Shuffle integrates with popular music streaming platforms, such as Spotify, to allow users to play with their own playlists, or they can use one of the pre-built genre playlists.
 
 ### Resume
-<canvas id="resume-canvas"></canvas>
+<canvas 
+    id="resume-canvas"
+    width="100%"
+></canvas>
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 <script>
     // PDF Loading Script - https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples
@@ -58,9 +61,3 @@ Shuffle is a web-based music party game where players can either compete or work
         console.error(error);
     });  
 </script>
-<!-- <embed 
-    src="/assets/img/2020Resume.pdf#toolbar=0&view=FitH" 
-    type="application/pdf" 
-    width="100%" 
-    height="645px"
-> -->
