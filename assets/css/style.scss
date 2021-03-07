@@ -3,6 +3,14 @@
 
 @import "{{ site.theme }}";
 
-.subtitle {
+.project-description {
     margin: 20px 0;
+}
+
+.contact-info {
+    margin-bottom: 5px;
+
+    .contact-method {
+        margin: 0;
+    }
 }
