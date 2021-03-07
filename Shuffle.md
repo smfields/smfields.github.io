@@ -29,7 +29,7 @@ The web server utilizes the custom music platform library for any and all intera
 
 The game server is an ASP.NET Core web application much like the web server, but its primary purpose is to control the state of active games. Unlike the web sever, the game server has only a single API endpoint which is used to create a new game. The rest of the communication with the game server is done over a SignalR connection directly to the client.
 
-The game server controls the state of the game using timers, and will notify the client via the SignalR connection of any updates to the game state. This architecture prevents the user from being able to interfere with the state of the game like they would be able to if it was being run client-side.
+The game server controls the state of the game using timers, and will notify the client via the SignalR connection of any updates to the game state. This architecture prevents the user from being able to interfere with the state of the game like they would if it was being run client-side.
 
 The game server utilizes the custom music platform library for any and all interactions with the music platforms.
 
@@ -40,7 +40,7 @@ The game server utilizes the custom music platform library for any and all inter
 
 The music platform library is a custom C# library I wrote that acts as a level of abstraction on top of the various music platform APIs that exist. It presents a single unified interface that can be used to perform actions such as retrieving playlists and songs or controlling music playback.
 
-By using the music platform library both the game server and web server are able to interact with the music platform selected by the user without ever needing to worry about which platform they are talking to.
+By using the music platform library, both the game server and web server are able to interact with the music platform selected by the user without ever needing to worry about which platform they are talking to.
 
 </details>
 
