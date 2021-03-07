@@ -96,5 +96,4 @@ Below are the steps of the algorithm that I designed to meet the above requireme
 </p>
 </details>
 
-\
 [Back](README.md)
