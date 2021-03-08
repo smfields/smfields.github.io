@@ -49,7 +49,7 @@ By using the music platform library, both the game server and web server are abl
 <details>
 <summary>Deployment</summary>
 
-The entire application is hosted off-site through Amazon Web Services. I'm using AWS Elastic Beanstalk for the web application deployment, AWS RDS to host a MySQL database, and AWS CodePipeline for continuous deployment. 
+The entire application is hosted off-site through Amazon Web Services. It uses AWS Elastic Beanstalk for the web application deployment, AWS RDS to host a MySQL database, and AWS CodePipeline for continuous deployment. 
 
 The AWS CodePipeline is connected to my GitHub repository and automatically deploys to my production version on merges to the main branch, or my to development version on merges to the dev branch.
 
@@ -74,9 +74,9 @@ When designing the selection algorithm we have a few requirements:
 
 #### Solution
 Below is an outline of the algorithm I designed to meet the above requirements, along with some code samples:
-1. To start off, we allow the caller to specify the playlist from which they want to select the songs, and the number of songs they want to retrieve.
+1. We will allow the caller to specify the playlist from which they want to select the songs, and the number of songs they want to retrieve.
 2. From the playlist provided by the caller we already have some basic information, such as the total number of songs on the playlist.
-3. Lets generate some random numbers to represent the indices of the songs we will eventually fetch. These random numbers must be unique, and they must be within the range of possible song indices for the playlist.
+3. We'll start by generating random numbers to represent the indices of the songs we will eventually fetch. These random numbers must be unique, and they must be within the range of possible song indices for the playlist.
    <details>
    <summary>Code Sample</summary>
 
@@ -314,7 +314,7 @@ A great example would be if a player guesses "Stairway to Heaven" as the name of
 My solution to this problem comes in two phases.
 
 **Phase 1:**
-In phase 1 I'll be using a hand crafted algorithm that attempts to address some of the most common errors people make when entering song or artist names. This includes handling things like simple misspellings, but it also includes stripping out unnecessary information such as the "- 1990 Remaster" from the above example.
+Phase 1 uses a hand crafted algorithm that attempts to address some of the most common errors people make when entering song or artist names. This includes handling things like simple misspellings, but it also includes stripping out unnecessary information such as the "- 1990 Remaster" from the above example.
 
 This is done using a text cleaning function to remove the unnecessary information from the correct string, then using a string similarity function to calculate the similarity between the guess and the now cleaned correct string.
 

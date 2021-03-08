@@ -10,7 +10,6 @@ Most of my personal projects are things that I think should exist, but don't. Wh
 *Click on a project to learn more about it.*
 
 #### [Shuffle: Music Party Game](Shuffle.md)
-Play here: [https://shuffle.smfields.net](https://shuffle.smfields.net)
 
 Shuffle is a web-based music party game where players can either compete or work together to try and identify a song that is playing. Players are on the clock, and must try to name the song and the artist as quickly as possible. Shuffle integrates with popular music streaming platforms, such as Spotify, to allow users to play with their own playlists, or they can use one of the pre-built genre playlists.
 
