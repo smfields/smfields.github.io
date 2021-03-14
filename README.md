@@ -7,11 +7,15 @@ I have a particular interest in software security. While I was in school I compl
 ### Projects
 Most of my personal projects are things that I think should exist, but don't. When choosing which technologies to use, my approach is to find the best tool for the job and learn how to use it rather than trying to force the technologies I already know into a role they weren't made for. This approach has exposed me to a large number of technologies and tools that I otherwise may never have tried.
 
-*Click on a project to learn more about it.*
+<p class="indent">
 
-#### [Shuffle: Music Party Game](Shuffle.md)
+#### [Shuffle: Music Party Game](https://playshuffle.tv)
 
 Shuffle is a web-based music party game where players can either compete or work together to try and identify a song that is playing. Players are on the clock, and must try to name the song and the artist as quickly as possible. Shuffle integrates with popular music streaming platforms, such as Spotify, to allow users to play with their own playlists, or they can use one of the pre-built genre playlists.
+
+[Click here to learn more about how I made Shuffle.](Shuffle.md)
+
+</p>
 
 ### Resume
 <canvas id="resume-canvas"></canvas>
