@@ -58,6 +58,7 @@ The connection to the load balancer is secured using TLS, however the backend co
 </details>
 
 
+
 ### Challenges
 In this section I explore some of the aspects of designing the game that I found challenging or particularly interesting. Click on a challenge to read more.
 

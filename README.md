@@ -33,12 +33,10 @@ Shuffle is a web-based music party game where players can either compete or work
 
     var loadingTask = pdfjsLib.getDocument(url);
     loadingTask.promise.then(function(pdf) {
-        console.log('PDF Loaded');
 
         // Fetch the first page
         var pageNumber = 1;
         pdf.getPage(pageNumber).then(function(page) {
-            console.log('Page loaded');
 
             var scale = 1.5;
             var viewport = page.getViewport({scale: scale});
@@ -55,10 +53,7 @@ Shuffle is a web-based music party game where players can either compete or work
                 viewport: viewport
             };
 
-            var renderTask = page.render(renderContext);
-            renderTask.promise.then(function () {
-                console.log('Page rendered');
-            });
+            page.render(renderContext);
         });
     }, function(error) {
         console.error(error);
