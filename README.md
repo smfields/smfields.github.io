@@ -25,7 +25,7 @@ Shuffle is a web-based music party game where players compete against one anothe
 <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
 <script>
     // PDF Loading Script - https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples
-    var url = '/assets/img/2020Resume.pdf';
+    var url = '/assets/img/2021Resume.pdf';
 
     var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
